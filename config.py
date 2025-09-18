@@ -1,0 +1,23 @@
+# config.py - MongoDB Configuration
+import os
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    MONGO_URI = os.environ.get('MONGO_URI') or 'mongodb://localhost:27017/taskmanagement'
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+
+class ProductionConfig(Config):
+    DEBUG = False
+
+class TestingConfig(Config):
+    TESTING = True
+    MONGO_URI = 'mongodb://localhost:27017/taskmanagement_test'
+
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig,
+    'default': DevelopmentConfig
+}
